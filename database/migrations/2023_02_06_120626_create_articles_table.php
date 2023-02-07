@@ -21,7 +21,9 @@ return new class extends Migration {
             $table->text('content');
             $table->string('image_filename')->nullable();
             $table->json('foreign_tags')->nullable();
+            $table->boolean('updated')->default(false);
             $table->timestamp('foreign_created_at')->nullable();
+            $table->timestamp('published_at')->nullable();
             $table->timestamp('created_at')->nullable();
         });
     }

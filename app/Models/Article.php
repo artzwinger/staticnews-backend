@@ -19,7 +19,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string $content
  * @property string|null $image_filename
  * @property array|null $foreign_tags
- * @property string|null $foreign_created_at
+ * @property int $updated
+ * @property \Illuminate\Support\Carbon|null $foreign_created_at
+ * @property \Illuminate\Support\Carbon|null $published_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Tag> $tags
  * @property-read int|null $tags_count
@@ -35,8 +37,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static Builder|Article whereForeignTags($value)
  * @method static Builder|Article whereId($value)
  * @method static Builder|Article whereImageFilename($value)
+ * @method static Builder|Article wherePublishedAt($value)
  * @method static Builder|Article whereSourceFeedId($value)
  * @method static Builder|Article whereTitle($value)
+ * @method static Builder|Article whereUpdated($value)
  * @method static Builder|Article whereWebsiteId($value)
  * @mixin \Eloquent
  */
@@ -58,7 +62,12 @@ class Article extends Model
         'content',
         'image_filename',
         'foreign_tags',
+        'updated',
+    ];
+
+    protected $dates = [
         'foreign_created_at',
+        'published_at',
     ];
 
     public function tags(): BelongsToMany

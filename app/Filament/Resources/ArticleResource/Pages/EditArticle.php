@@ -3,8 +3,10 @@
 namespace App\Filament\Resources\ArticleResource\Pages;
 
 use App\Filament\Resources\ArticleResource;
+use App\Models\Article;
 use App\Models\Website;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -23,9 +25,20 @@ class EditArticle extends EditRecord
         ];
     }
 
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        $article = Article::whereId($data['id'])->first();
+        if ($article->published_at) {
+            $data['updated'] = true;
+        }
+        unset($data['id']);
+        return $data;
+    }
+
     protected function getFormSchema(): array
     {
         return [
+            Hidden::make('id'),
             FileUpload::make('image_filename')->image(),
             TextInput::make('title')
                 ->required(),
