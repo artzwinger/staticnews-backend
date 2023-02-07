@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ArticlesToPublish;
+use App\Http\Controllers\PublishArticles;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/articles_to_publish/{websiteId}', ArticlesToPublish::class)->name('articles_to_publish');
+Route::post('/publish_articles/{websiteId}', PublishArticles::class)->name('publish_articles');

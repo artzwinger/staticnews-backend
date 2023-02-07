@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Trait\Scope\ArticleScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -30,6 +31,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static Builder|Article newModelQuery()
  * @method static Builder|Article newQuery()
  * @method static Builder|Article query()
+ * @method static Builder|Article toPublish()
  * @method static Builder|Article whereContent($value)
  * @method static Builder|Article whereCreatedAt($value)
  * @method static Builder|Article whereDescription($value)
@@ -47,6 +49,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Article extends Model
 {
     use HasFactory;
+    use ArticleScope;
 
     const UPDATED_AT = null;
 
