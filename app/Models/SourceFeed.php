@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $id
  * @property int $website_id
  * @property string $url
- * @property string $latest_article_marker
+ * @property string|null $latest_article_marker
  * @property-read \App\Models\Website $website
  * @method static \Database\Factories\SourceFeedFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|SourceFeed newModelQuery()
@@ -30,6 +30,14 @@ class SourceFeed extends Model
 
     // how many articles to receive if there is no marker of the latest article saved
     const NO_MARKER_ARTICLES_FETCH_COUNT = 10;
+
+    public $timestamps = false;
+
+    protected $fillable = [
+        'website_id',
+        'url',
+        'latest_article_marker',
+    ];
 
     public function website(): BelongsTo
     {

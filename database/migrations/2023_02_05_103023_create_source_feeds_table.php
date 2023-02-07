@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->foreignId('website_id')
                 ->references('id')->on('websites');
             $table->string('url');
-            $table->string('latest_article_marker');
+            $table->string('latest_article_marker')->nullable();
         });
     }
 

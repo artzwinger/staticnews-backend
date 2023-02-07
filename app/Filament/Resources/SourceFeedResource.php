@@ -27,13 +27,15 @@ class SourceFeedResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('id'),
+                Tables\Columns\TextColumn::make('website.url')->searchable(),
+                Tables\Columns\TextColumn::make('latest_article_marker'),
+                Tables\Columns\TextColumn::make('url')->searchable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -53,7 +55,6 @@ class SourceFeedResource extends Resource
         return [
             'index' => Pages\ListSourceFeeds::route('/'),
             'create' => Pages\CreateSourceFeed::route('/create'),
-            'view' => Pages\ViewSourceFeed::route('/{record}'),
             'edit' => Pages\EditSourceFeed::route('/{record}/edit'),
         ];
     }
