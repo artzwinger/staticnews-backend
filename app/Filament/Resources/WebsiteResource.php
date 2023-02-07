@@ -31,34 +31,32 @@ class WebsiteResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('id'),
+                Tables\Columns\TextColumn::make('url')->searchable(),
             ])
             ->filters([
-                //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListWebsites::route('/'),
             'create' => Pages\CreateWebsite::route('/create'),
-            'view' => Pages\ViewWebsite::route('/{record}'),
             'edit' => Pages\EditWebsite::route('/{record}/edit'),
         ];
-    }    
+    }
 }
