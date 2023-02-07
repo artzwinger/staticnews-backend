@@ -2,17 +2,18 @@
 
 namespace App\Models;
 
-use Database\Factories\ArticleFactory;
-use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * App\Models\Article
  *
  * @property int $id
+ * @property int $website_id
+ * @property int $source_feed_id
  * @property string $title
  * @property string $description
  * @property string $content
@@ -22,6 +23,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Tag> $tags
  * @property-read int|null $tags_count
+ * @property-read \App\Models\Website $website
  * @method static \Database\Factories\ArticleFactory factory($count = null, $state = [])
  * @method static Builder|Article newModelQuery()
  * @method static Builder|Article newQuery()
@@ -33,8 +35,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static Builder|Article whereForeignTags($value)
  * @method static Builder|Article whereId($value)
  * @method static Builder|Article whereImageFilename($value)
+ * @method static Builder|Article whereSourceFeedId($value)
  * @method static Builder|Article whereTitle($value)
- * @mixin Eloquent
+ * @method static Builder|Article whereWebsiteId($value)
+ * @mixin \Eloquent
  */
 class Article extends Model
 {
@@ -49,5 +53,10 @@ class Article extends Model
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function website(): BelongsTo
+    {
+        return $this->belongsTo(Website::class);
     }
 }

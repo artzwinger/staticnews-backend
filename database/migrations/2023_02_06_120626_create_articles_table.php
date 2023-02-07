@@ -12,6 +12,10 @@ return new class extends Migration {
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('website_id')
+                ->references('id')->on('websites');
+            $table->foreignId('source_feed_id')
+                ->references('id')->on('source_feeds');
             $table->string('title');
             $table->string('description');
             $table->text('content');

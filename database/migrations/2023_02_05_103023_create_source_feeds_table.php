@@ -10,13 +10,12 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('foreign_tag_maps', function (Blueprint $table) {
+        Schema::create('source_feeds', function (Blueprint $table) {
             $table->id();
             $table->foreignId('website_id')
                 ->references('id')->on('websites');
-            $table->string('foreign_tag')->index();
-            $table->foreignId('tag_id')->index();
-            $table->unique(['foreign_tag', 'tag_id']);
+            $table->string('url');
+            $table->string('latest_article_marker');
         });
     }
 
@@ -25,6 +24,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('foreign_tag_maps');
+        Schema::dropIfExists('source_feeds');
     }
 };
