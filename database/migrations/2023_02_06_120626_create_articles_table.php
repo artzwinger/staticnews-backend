@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('website_id')
                 ->references('id')->on('websites');
-            $table->foreignId('source_feed_id')
+            $table->foreignId('source_feed_id')->nullable()
                 ->references('id')->on('source_feeds');
             $table->string('title');
             $table->string('description');

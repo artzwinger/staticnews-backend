@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  *
  * @property int $id
  * @property int $website_id
- * @property int $source_feed_id
+ * @property int|null $source_feed_id
  * @property string $title
  * @property string $description
  * @property string $content
@@ -48,6 +48,17 @@ class Article extends Model
 
     protected $casts = [
         'foreign_tags' => 'array',
+    ];
+
+    protected $fillable = [
+        'website_id',
+        'source_feed_id',
+        'title',
+        'description',
+        'content',
+        'image_filename',
+        'foreign_tags',
+        'foreign_created_at',
     ];
 
     public function tags(): BelongsToMany
