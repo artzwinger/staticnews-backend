@@ -24,10 +24,13 @@ class CreateSourceFeed extends CreateRecord
                 SourceFeed::TYPE_MEDIASTACK => 'Mediastack',
             ])->required(),
             Section::make('Yandex / Google news settings')
+                ->collapsible()
                 ->schema([
                     TextInput::make('url')->nullable(),
                 ]),
             Section::make('Mediastack settings')
+                ->collapsible()
+                ->collapsed()
                 ->schema([
                     TextInput::make('keywords')->nullable(),
                     TextInput::make('sources')->nullable(),
