@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property int $id
  * @property int $website_id
  * @property int|null $source_feed_id
+ * @property string $slug
  * @property string $title
  * @property string $description
  * @property string $content
@@ -40,6 +41,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static Builder|Article whereId($value)
  * @method static Builder|Article whereImageFilename($value)
  * @method static Builder|Article wherePublishedAt($value)
+ * @method static Builder|Article whereSlug($value)
  * @method static Builder|Article whereSourceFeedId($value)
  * @method static Builder|Article whereTitle($value)
  * @method static Builder|Article whereUpdated($value)
@@ -60,6 +62,7 @@ class Article extends Model
     protected $fillable = [
         'website_id',
         'source_feed_id',
+        'slug',
         'title',
         'description',
         'content',

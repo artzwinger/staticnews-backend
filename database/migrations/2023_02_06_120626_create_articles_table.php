@@ -16,8 +16,9 @@ return new class extends Migration {
                 ->references('id')->on('websites');
             $table->foreignId('source_feed_id')->nullable()
                 ->references('id')->on('source_feeds');
-            $table->string('title');
-            $table->string('description');
+            $table->string('slug', 500)->unique();
+            $table->string('title', 500);
+            $table->text('description');
             $table->text('content');
             $table->string('image_filename')->nullable();
             $table->json('foreign_tags')->nullable();
