@@ -16,10 +16,17 @@ class CreateSourceFeed extends CreateRecord
     protected function getFormSchema(): array
     {
         return [
-            TextInput::make('url')
-                ->required()
-                ->unique(SourceFeed::class, 'url'),
+            TextInput::make('keywords')->nullable(),
+            TextInput::make('sources')->nullable(),
+            TextInput::make('categories')->nullable(),
+            TextInput::make('countries')->nullable(),
+            TextInput::make('languages')->nullable(),
             TextInput::make('latest_article_marker')->nullable(),
+            Select::make('sort')->options([
+                SourceFeed::SORT_PUBLISHED_DESC => 'Published DESC',
+                SourceFeed::SORT_PUBLISHED_ASC => 'Published ASC',
+                SourceFeed::SORT_POPULARITY => 'Popularity',
+            ])->required(),
             Select::make('website_id')->options(Website::all()->pluck('url', 'id'))->required(),
         ];
     }

@@ -30,7 +30,11 @@ class SourceFeedResource extends Resource
                 Tables\Columns\TextColumn::make('id'),
                 Tables\Columns\TextColumn::make('website.url')->searchable(),
                 Tables\Columns\TextColumn::make('latest_article_marker'),
-                Tables\Columns\TextColumn::make('url')->searchable(),
+                Tables\Columns\TextColumn::make('keywords')->searchable(),
+                Tables\Columns\TextColumn::make('sources')->searchable(),
+                Tables\Columns\TextColumn::make('languages')->searchable(),
+                Tables\Columns\TextColumn::make('countries')->searchable(),
+                Tables\Columns\TextColumn::make('sort')->searchable(),
             ])
             ->filters([
                 //

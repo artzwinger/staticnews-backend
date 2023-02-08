@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\SourceFeed;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,7 +15,13 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('website_id')
                 ->references('id')->on('websites');
-            $table->string('url');
+            $table->string('keywords')->nullable();
+            $table->string('countries')->nullable();
+            $table->string('categories')->nullable();
+            $table->string('sources')->nullable();
+            $table->string('languages')->nullable();
+            $table->enum('sort', SourceFeed::getAvailableSorts())
+                ->default(SourceFeed::SORT_PUBLISHED_DESC);
             $table->string('latest_article_marker')->nullable();
         });
     }

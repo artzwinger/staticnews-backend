@@ -11,16 +11,26 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @property int $id
  * @property int $website_id
- * @property string $url
+ * @property string|null $keywords
+ * @property string|null $countries
+ * @property string|null $categories
+ * @property string|null $sources
+ * @property string|null $languages
+ * @property string $sort
  * @property string|null $latest_article_marker
  * @property-read \App\Models\Website $website
  * @method static \Database\Factories\SourceFeedFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|SourceFeed newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|SourceFeed newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|SourceFeed query()
+ * @method static \Illuminate\Database\Eloquent\Builder|SourceFeed whereCategories($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SourceFeed whereCountries($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SourceFeed whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SourceFeed whereKeywords($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SourceFeed whereLanguages($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SourceFeed whereLatestArticleMarker($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SourceFeed whereUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SourceFeed whereSort($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SourceFeed whereSources($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SourceFeed whereWebsiteId($value)
  * @mixin \Eloquent
  */
@@ -31,16 +41,35 @@ class SourceFeed extends Model
     // how many articles to receive if there is no marker of the latest article saved
     const NO_MARKER_ARTICLES_FETCH_COUNT = 10;
 
+    const SORT_PUBLISHED_DESC = 'published_desc';
+    const SORT_PUBLISHED_ASC = 'published_asc';
+    const SORT_POPULARITY = 'popularity';
+
     public $timestamps = false;
 
     protected $fillable = [
         'website_id',
         'url',
         'latest_article_marker',
+        'keywords',
+        'sources',
+        'categories',
+        'countries',
+        'languages',
+        'sort',
     ];
 
     public function website(): BelongsTo
     {
         return $this->belongsTo(Website::class);
+    }
+
+    public static function getAvailableSorts(): array
+    {
+        return [
+            self::SORT_PUBLISHED_DESC,
+            self::SORT_PUBLISHED_ASC,
+            self::SORT_POPULARITY,
+        ];
     }
 }
