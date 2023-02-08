@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use App\Jobs\IProcessFeedJob;
+use App\Jobs\ProcessGoogleNewsFeedJob;
+use App\Jobs\ProcessMediastackFeedJob;
+use App\Jobs\ProcessYandexNewsFeedJob;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -55,6 +59,10 @@ class SourceFeed extends Model
     const TYPE_GOOGLE_NEWS = 'google_news';
     const TYPE_MEDIASTACK = 'mediastack';
 
+    const YANDEX_NEWS_FREQ_HOURS = 1;
+    const GOOGLE_NEWS_FREQ_HOURS = 1;
+    const MEDIASTACK_FREQ_HOURS = 1;
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -95,5 +103,28 @@ class SourceFeed extends Model
             self::TYPE_GOOGLE_NEWS,
             self::TYPE_MEDIASTACK,
         ];
+    }
+
+    public function getFrequencyHours(): int
+    {
+        return match ($this->type) {
+            self::TYPE_GOOGLE_NEWS => self::GOOGLE_NEWS_FREQ_HOURS,
+            self::TYPE_YANDEX_NEWS => self::YANDEX_NEWS_FREQ_HOURS,
+            self::TYPE_MEDIASTACK => self::MEDIASTACK_FREQ_HOURS,
+        };
+    }
+
+    public function getFeedProcessorJobInstance(): IProcessFeedJob
+    {
+        return match ($this->type) {
+            self::TYPE_GOOGLE_NEWS => new ProcessGoogleNewsFeedJob($this),
+            self::TYPE_YANDEX_NEWS => new ProcessYandexNewsFeedJob($this),
+            self::TYPE_MEDIASTACK => new ProcessMediastackFeedJob($this),
+        };
+    }
+
+    public function shouldEnqueueProcessing(): bool
+    {
+        return !$this->latest_processed_at || $this->latest_processed_at->diffInHours() >= $this->getFrequencyHours();
     }
 }
