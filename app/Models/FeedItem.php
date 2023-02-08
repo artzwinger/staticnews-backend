@@ -9,14 +9,15 @@ use Illuminate\Database\Eloquent\Model;
  * App\Models\FeedItem
  *
  * @property int $id
+ * @property int|null $source_feed_id
  * @property int|null $article_id
  * @property string $author
  * @property string $title
  * @property string $description
  * @property string $url
+ * @property string $source
  * @property string $image
  * @property string $category
- * @property string $source
  * @property string $language
  * @property string $country
  * @property string $source_published_at
@@ -36,6 +37,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|FeedItem whereImage($value)
  * @method static \Illuminate\Database\Eloquent\Builder|FeedItem whereLanguage($value)
  * @method static \Illuminate\Database\Eloquent\Builder|FeedItem whereSource($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FeedItem whereSourceFeedId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|FeedItem whereSourcePublishedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|FeedItem whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|FeedItem whereUpdatedAt($value)

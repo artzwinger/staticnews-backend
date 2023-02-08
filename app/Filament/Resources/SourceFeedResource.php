@@ -29,6 +29,8 @@ class SourceFeedResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('id'),
                 Tables\Columns\TextColumn::make('website.url')->searchable(),
+                Tables\Columns\TextColumn::make('type')->searchable(),
+                Tables\Columns\TextColumn::make('url')->searchable(),
                 Tables\Columns\TextColumn::make('latest_article_marker'),
                 Tables\Columns\TextColumn::make('keywords')->searchable(),
                 Tables\Columns\TextColumn::make('sources')->searchable(),

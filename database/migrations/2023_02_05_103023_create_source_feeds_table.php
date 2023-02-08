@@ -15,14 +15,17 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('website_id')
                 ->references('id')->on('websites');
+            $table->string('url')->nullable();
             $table->string('keywords')->nullable();
             $table->string('countries')->nullable();
             $table->string('categories')->nullable();
             $table->string('sources')->nullable();
             $table->string('languages')->nullable();
-            $table->enum('sort', SourceFeed::getAvailableSorts())
-                ->default(SourceFeed::SORT_PUBLISHED_DESC);
+            $table->enum('sort', SourceFeed::getAvailableSorts())->nullable();
+            $table->enum('type', SourceFeed::getAvailableTypes())
+                ->default(SourceFeed::TYPE_MEDIASTACK);
             $table->string('latest_article_marker')->nullable();
+            $table->timestamp('latest_processed_at')->nullable();
         });
     }
 

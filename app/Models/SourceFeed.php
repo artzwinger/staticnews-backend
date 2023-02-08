@@ -11,13 +11,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @property int $id
  * @property int $website_id
+ * @property string|null $url
  * @property string|null $keywords
  * @property string|null $countries
  * @property string|null $categories
  * @property string|null $sources
  * @property string|null $languages
- * @property string $sort
+ * @property string|null $sort
+ * @property string $type
  * @property string|null $latest_article_marker
+ * @property \Illuminate\Support\Carbon|null $latest_processed_at
  * @property-read \App\Models\Website $website
  * @method static \Database\Factories\SourceFeedFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|SourceFeed newModelQuery()
@@ -29,8 +32,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|SourceFeed whereKeywords($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SourceFeed whereLanguages($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SourceFeed whereLatestArticleMarker($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SourceFeed whereLatestProcessedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SourceFeed whereSort($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SourceFeed whereSources($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SourceFeed whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SourceFeed whereUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SourceFeed whereWebsiteId($value)
  * @mixin \Eloquent
  */
@@ -45,6 +51,10 @@ class SourceFeed extends Model
     const SORT_PUBLISHED_ASC = 'published_asc';
     const SORT_POPULARITY = 'popularity';
 
+    const TYPE_YANDEX_NEWS = 'yandex_news';
+    const TYPE_GOOGLE_NEWS = 'google_news';
+    const TYPE_MEDIASTACK = 'mediastack';
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -57,6 +67,11 @@ class SourceFeed extends Model
         'countries',
         'languages',
         'sort',
+        'type',
+    ];
+
+    protected $dates = [
+        'latest_processed_at',
     ];
 
     public function website(): BelongsTo
@@ -70,6 +85,15 @@ class SourceFeed extends Model
             self::SORT_PUBLISHED_DESC,
             self::SORT_PUBLISHED_ASC,
             self::SORT_POPULARITY,
+        ];
+    }
+
+    public static function getAvailableTypes(): array
+    {
+        return [
+            self::TYPE_YANDEX_NEWS,
+            self::TYPE_GOOGLE_NEWS,
+            self::TYPE_MEDIASTACK,
         ];
     }
 }
