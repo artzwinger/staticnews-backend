@@ -44,7 +44,6 @@ class ProcessYandexNewsFeedJob implements ShouldQueue, IProcessFeedJob
         foreach ($items as $item) {
             try {
                 $image = $item->xpath('//enclosure') ? $item?->enclosure[0]['url'] : null;
-                file_put_contents('/var/www/html/img1.txt', json_encode([$image]));
                 if ($image) {
                     $image = $this->downloadImage($image);
                 }
