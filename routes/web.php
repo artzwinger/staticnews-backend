@@ -16,8 +16,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect(route('filament.auth.login'));
 });
+Route::get('/login', function () {
+    return redirect(route('filament.auth.login'));
+})->name('login');
 
 Route::get('/articles_to_publish/{websiteId}', ArticlesToPublish::class)->name('articles_to_publish');
 Route::post('/publish_articles/{websiteId}', PublishArticles::class)->name('publish_articles');
