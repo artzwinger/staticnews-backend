@@ -43,11 +43,14 @@ class ProcessYandexNewsFeedJob implements ShouldQueue, IProcessFeedJob
         $items = $xml->xpath('//item');
         foreach ($items as $item) {
             try {
+                $slug = Str::slug(Str::transliterate((string)$item?->title));
+                if (Article::whereSlug($slug)->exists()) {
+                    continue;
+                }
                 $image = $item->xpath('//enclosure') ? $item?->enclosure[0]['url'] : null;
                 if ($image) {
                     $image = $this->downloadImage($image);
                 }
-                $slug = Str::slug(Str::transliterate((string)$item?->title));
                 $foreignTags = [];
                 if ($item?->category) {
                     $foreignTags[] = (string)$item->category;
@@ -71,9 +74,11 @@ class ProcessYandexNewsFeedJob implements ShouldQueue, IProcessFeedJob
 
     private function downloadImage($imageSrc): string
     {
-        $image = file_get_contents($imageSrc);
         $filename = md5($imageSrc) . '.' . $this->getImageExt($imageSrc);
-        Storage::disk('public')->put($filename, $image);
+        if (!Storage::disk('public')->exists($filename)) {
+            $image = file_get_contents($imageSrc);
+            Storage::disk('public')->put($filename, $image);
+        }
         return $filename;
     }
 
