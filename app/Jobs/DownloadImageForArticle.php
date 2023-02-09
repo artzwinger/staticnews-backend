@@ -32,7 +32,7 @@ class DownloadImageForArticle implements ShouldQueue
     public function handle(): void
     {
         $filename = $this->downloadImage($this->imageSrc);
-        $this->article->update(['image_filename' => $filename]);
+        $this->article->update(['image_filename' => $filename, 'updated' => true]);
     }
 
     private function downloadImage($imageSrc): string
