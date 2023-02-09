@@ -19,6 +19,9 @@ class CreateWebsite extends CreateRecord
             TextInput::make('url')
                 ->required()
                 ->unique(Website::class, 'url'),
+            TextInput::make('code')
+                ->required()
+                ->unique(Website::class, 'code'),
         ];
     }
 }

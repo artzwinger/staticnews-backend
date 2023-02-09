@@ -34,6 +34,7 @@ class ProcessYandexNewsFeedJob implements ShouldQueue, IProcessFeedJob
      */
     public function handle(): void
     {
+        $this->feed->update(['latest_processed_at' => Carbon::now()]);
         $url = $this->feed->url;
         $response = Http::withUserAgent(self::USERAGENT)->get($url);
         if ($response->status() !== 200) {

@@ -29,9 +29,6 @@ class ArticleResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('id'),
                 Tables\Columns\TextColumn::make('website.url'),
-                Tables\Columns\TextColumn::make('sourceFeed.sources'),
-                Tables\Columns\TextColumn::make('sourceFeed.categories'),
-                Tables\Columns\TextColumn::make('sourceFeed.keywords'),
                 Tables\Columns\TextColumn::make('title')->searchable(),
                 Tables\Columns\TextColumn::make('description')->searchable(),
                 Tables\Columns\ImageColumn::make('image_filename'),

@@ -18,6 +18,9 @@ class EditWebsite extends EditRecord
             TextInput::make('url')
                 ->required()
                 ->unique(Website::class, 'url'),
+            TextInput::make('code')
+                ->required()
+                ->unique(Website::class, 'code'),
         ];
     }
 

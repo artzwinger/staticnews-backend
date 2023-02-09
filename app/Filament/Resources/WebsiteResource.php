@@ -28,6 +28,7 @@ class WebsiteResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id'),
+                Tables\Columns\TextColumn::make('code')->searchable(),
                 Tables\Columns\TextColumn::make('url')->searchable(),
             ])
             ->filters([
