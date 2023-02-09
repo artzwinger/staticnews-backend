@@ -48,44 +48,27 @@ class ProcessYandexNewsFeedJob implements ShouldQueue, IProcessFeedJob
                 if (Article::whereSlug($slug)->exists()) {
                     continue;
                 }
-                $image = $item->xpath('//enclosure') ? $item?->enclosure[0]['url'] : null;
-                if ($image) {
-                    $image = $this->downloadImage($image);
-                }
                 $foreignTags = [];
                 if ($item?->category) {
                     $foreignTags[] = (string)$item->category;
                 }
                 $content = (string)$item->xpath('//yandex:full-text')[0];
-                Article::factory()->create([
+                $article = Article::factory()->create([
                     'website_id' => $this->feed->website_id,
                     'source_feed_id' => $this->feed->id,
                     'slug' => $slug,
                     'title' => (string)$item?->title,
                     'description' => (string)$item?->description,
                     'content' => $content,
-                    'image_filename' => $image,
                     'foreign_created_at' => Carbon::parse((string)$item->pubDate),
                     'foreign_tags' => $foreignTags,
                 ]);
+                $image = $item->xpath('//enclosure') ? $item?->enclosure[0]['url'] : null;
+                if ($article->id) {
+                    dispatch(new DownloadImageForArticle($article, $image));
+                }
             } catch (\Exception $exception) {
             }
         }
-    }
-
-    private function downloadImage($imageSrc): string
-    {
-        $filename = md5($imageSrc) . '.' . $this->getImageExt($imageSrc);
-        if (!Storage::disk('public')->exists($filename)) {
-            $image = file_get_contents($imageSrc);
-            Storage::disk('public')->put($filename, $image);
-        }
-        return $filename;
-    }
-
-    private function getImageExt($imageSrc): string
-    {
-        $parts = explode('.', $imageSrc);
-        return end($parts);
     }
 }
