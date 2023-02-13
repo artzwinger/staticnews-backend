@@ -10,10 +10,9 @@ class ArticlesToPublish extends Controller
 {
     /**
      * @param $websiteCode
-     * @param $lastFetchedTimestamp
      * @return JsonResponse
      */
-    public function __invoke($websiteCode, $lastFetchedTimestamp): JsonResponse
+    public function __invoke($websiteCode): JsonResponse
     {
         $website = Website::whereCode($websiteCode)->first();
         $articles = Article::whereWebsiteId($website->id)

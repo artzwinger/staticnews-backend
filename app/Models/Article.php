@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * App\Models\Article
@@ -75,6 +76,15 @@ class Article extends Model
         'foreign_created_at',
         'published_at',
     ];
+
+    protected $appends = [
+        'image_url',
+    ];
+
+    public function getImageUrlAttribute(): ?string
+    {
+        return $this->image_filename ? env('APP_URL') . Storage::url($this->image_filename) : null;
+    }
 
     public function tags(): BelongsToMany
     {
