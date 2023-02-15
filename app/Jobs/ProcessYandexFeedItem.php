@@ -11,6 +11,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ProcessYandexFeedItem implements ShouldQueue
@@ -66,10 +67,12 @@ class ProcessYandexFeedItem implements ShouldQueue
     private function getOrCreateForeignTagIds($tags): array
     {
         return array_map(function ($tag) {
-            return ForeignTag::whereName($tag)->firstOrCreate([
-                'name' => $tag,
-                'slug' => $this->getSlug($tag),
-            ])->id;
+            return DB::transaction(function () use ($tag) {
+                return ForeignTag::whereName($tag)->lockForUpdate()->firstOrCreate([
+                    'name' => $tag,
+                    'slug' => $this->getSlug($tag),
+                ])->id;
+            });
         }, $tags);
     }
 

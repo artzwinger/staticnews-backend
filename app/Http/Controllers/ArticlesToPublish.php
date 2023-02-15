@@ -16,6 +16,7 @@ class ArticlesToPublish extends Controller
     {
         $website = Website::whereCode($websiteCode)->first();
         $articles = Article::whereWebsiteId($website->id)
+            ->with('foreignTags')
             ->toPublish()->get();
         return new JsonResponse(['articles' => $articles]);
     }
