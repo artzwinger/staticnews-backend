@@ -16,16 +16,16 @@ class ProcessYandexFeedItem implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private \SimpleXMLElement $item;
     private SourceFeed $feed;
+    private string $item;
 
     /**
      * @return void
      */
-    public function __construct(\SimpleXMLElement $item, SourceFeed $feed)
+    public function __construct(string $item, SourceFeed $feed)
     {
-        $this->item = $item;
         $this->feed = $feed;
+        $this->item = $item;
     }
 
     /**
@@ -33,26 +33,28 @@ class ProcessYandexFeedItem implements ShouldQueue
      */
     public function handle(): void
     {
-        $slug = Str::slug(Str::transliterate((string)$this->item?->title));
+        $item = simplexml_load_string($this->item);
+        $item = $item->xpath('//item')[0];
+        $slug = Str::slug(Str::transliterate((string)$item?->title));
         if (Article::whereSlug($slug)->exists()) {
             return;
         }
         $foreignTags = [];
-        if ($this->item?->category) {
-            $foreignTags[] = (string)$this->item->category;
+        if ($item?->category) {
+            $foreignTags[] = (string)$item->category;
         }
-        $content = (string)$this->item->xpath('//yandex:full-text')[0];
+        $content = (string)$item->xpath('//yandex:full-text')[0];
         $article = Article::factory()->create([
             'website_id' => $this->feed->website_id,
             'source_feed_id' => $this->feed->id,
             'slug' => $slug,
-            'title' => (string)$this->item?->title,
-            'description' => (string)$this->item?->description,
+            'title' => (string)$item?->title,
+            'description' => (string)$item?->description,
             'content' => $content,
-            'foreign_created_at' => Carbon::parse((string)$this->item->pubDate),
+            'foreign_created_at' => Carbon::parse((string)$item->pubDate),
             'foreign_tags' => $foreignTags,
         ]);
-        $image = $this->item->xpath('//enclosure') ? $this->item?->enclosure[0]['url'] : null;
+        $image = $item->xpath('//enclosure') ? $item?->enclosure[0]['url'] : null;
         if ($article->id) {
             dispatch(new DownloadImageForArticle($article, $image));
         }

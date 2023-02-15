@@ -40,10 +40,23 @@ class ProcessYandexNewsFeedJob implements ShouldQueue, IProcessFeedJob
         if ($response->status() !== 200) {
             throw new Exception('Cannot fetch ' . $url . ' for feed #' . $this->feed->id);
         }
-        $xml = simplexml_load_string($response->body());
+        $bodyDom = new \DOMDocument();
+        $bodyDom->loadXML($response->body());
+
+        $xml = $this->wrapNamespaces($bodyDom->saveXML($bodyDom->documentElement));
+
+        $xml = simplexml_load_string($xml);
         $items = $xml->xpath('//item');
         foreach ($items as $item) {
-            dispatch(new ProcessYandexFeedItem($item, $this->feed));
+            dispatch(new ProcessYandexFeedItem($this->wrapNamespaces($item->asXML()), $this->feed));
         }
+    }
+
+    private function wrapNamespaces(string $xml): string
+    {
+        $res = '<root xmlns:yandex="http://news.yandex.ru" xmlns:media="http://search.yahoo.com/mrss/" xmlns:turbo="http://turbo.yandex.ru">';
+        $res .= $xml;
+        $res .= '</root>';
+        return $res;
     }
 }
