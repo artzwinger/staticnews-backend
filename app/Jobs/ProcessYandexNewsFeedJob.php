@@ -43,32 +43,7 @@ class ProcessYandexNewsFeedJob implements ShouldQueue, IProcessFeedJob
         $xml = simplexml_load_string($response->body());
         $items = $xml->xpath('//item');
         foreach ($items as $item) {
-            try {
-                $slug = Str::slug(Str::transliterate((string)$item?->title));
-                if (Article::whereSlug($slug)->exists()) {
-                    continue;
-                }
-                $foreignTags = [];
-                if ($item?->category) {
-                    $foreignTags[] = (string)$item->category;
-                }
-                $content = (string)$item->xpath('//yandex:full-text')[0];
-                $article = Article::factory()->create([
-                    'website_id' => $this->feed->website_id,
-                    'source_feed_id' => $this->feed->id,
-                    'slug' => $slug,
-                    'title' => (string)$item?->title,
-                    'description' => (string)$item?->description,
-                    'content' => $content,
-                    'foreign_created_at' => Carbon::parse((string)$item->pubDate),
-                    'foreign_tags' => $foreignTags,
-                ]);
-                $image = $item->xpath('//enclosure') ? $item?->enclosure[0]['url'] : null;
-                if ($article->id) {
-                    dispatch(new DownloadImageForArticle($article, $image));
-                }
-            } catch (\Exception $exception) {
-            }
+            dispatch(new ProcessYandexFeedItem($item, $this->feed));
         }
     }
 }
