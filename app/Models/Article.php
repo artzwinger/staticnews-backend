@@ -21,11 +21,11 @@ use Illuminate\Support\Facades\Storage;
  * @property string $description
  * @property string $content
  * @property string|null $image_filename
- * @property array|null $foreign_tags
  * @property int $updated
  * @property \Illuminate\Support\Carbon|null $foreign_created_at
  * @property \Illuminate\Support\Carbon|null $published_at
  * @property \Illuminate\Support\Carbon|null $created_at
+ * @property-read string|null $image_url
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Tag> $tags
  * @property-read int|null $tags_count
  * @property-read \App\Models\Website $website
@@ -38,7 +38,6 @@ use Illuminate\Support\Facades\Storage;
  * @method static Builder|Article whereCreatedAt($value)
  * @method static Builder|Article whereDescription($value)
  * @method static Builder|Article whereForeignCreatedAt($value)
- * @method static Builder|Article whereForeignTags($value)
  * @method static Builder|Article whereId($value)
  * @method static Builder|Article whereImageFilename($value)
  * @method static Builder|Article wherePublishedAt($value)

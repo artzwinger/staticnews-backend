@@ -14,9 +14,9 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('website_id')
                 ->references('id')->on('websites');
-            $table->string('foreign_tag')->index();
+            $table->foreignId('foreign_tag_id')->index();
             $table->foreignId('tag_id')->index();
-            $table->unique(['foreign_tag', 'tag_id']);
+            $table->unique(['website_id', 'foreign_tag_id', 'tag_id']);
         });
     }
 
