@@ -23,4 +23,11 @@ use Illuminate\Database\Eloquent\Model;
 class ForeignTag extends Model
 {
     use HasFactory;
+
+    public $timestamps = false;
+
+    protected $fillable = [
+        'name',
+        'slug',
+    ];
 }

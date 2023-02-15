@@ -25,6 +25,8 @@ use Illuminate\Support\Facades\Storage;
  * @property \Illuminate\Support\Carbon|null $foreign_created_at
  * @property \Illuminate\Support\Carbon|null $published_at
  * @property \Illuminate\Support\Carbon|null $created_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ForeignTag> $foreignTags
+ * @property-read int|null $foreign_tags_count
  * @property-read string|null $image_url
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Tag> $tags
  * @property-read int|null $tags_count
@@ -55,10 +57,6 @@ class Article extends Model
 
     const UPDATED_AT = null;
 
-    protected $casts = [
-        'foreign_tags' => 'array',
-    ];
-
     protected $fillable = [
         'website_id',
         'source_feed_id',
@@ -67,7 +65,6 @@ class Article extends Model
         'description',
         'content',
         'image_filename',
-        'foreign_tags',
         'updated',
     ];
 
@@ -88,6 +85,11 @@ class Article extends Model
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function foreignTags(): BelongsToMany
+    {
+        return $this->belongsToMany(ForeignTag::class);
     }
 
     public function website(): BelongsTo

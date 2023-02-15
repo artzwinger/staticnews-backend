@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Article;
+use App\Models\ForeignTag;
 use App\Models\SourceFeed;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
@@ -35,7 +36,7 @@ class ProcessYandexFeedItem implements ShouldQueue
     {
         $item = simplexml_load_string($this->item);
         $item = $item->xpath('//item')[0];
-        $slug = Str::slug(Str::transliterate((string)$item?->title));
+        $slug = $this->getSlug((string)$item?->title);
         if (Article::whereSlug($slug)->exists()) {
             return;
         }
@@ -52,11 +53,28 @@ class ProcessYandexFeedItem implements ShouldQueue
             'description' => (string)$item?->description,
             'content' => $content,
             'foreign_created_at' => Carbon::parse((string)$item->pubDate),
-            'foreign_tags' => $foreignTags,
         ]);
+        $article->foreignTags()->attach(
+            $this->getOrCreateForeignTagIds($foreignTags)
+        );
         $image = $item->xpath('//enclosure') ? $item?->enclosure[0]['url'] : null;
         if ($article->id) {
             dispatch(new DownloadImageForArticle($article, $image));
         }
+    }
+
+    private function getOrCreateForeignTagIds($tags): array
+    {
+        return array_map(function ($tag) {
+            return ForeignTag::whereName($tag)->firstOrCreate([
+                'name' => $tag,
+                'slug' => $this->getSlug($tag),
+            ])->id;
+        }, $tags);
+    }
+
+    private function getSlug($name): string
+    {
+        return Str::slug(Str::transliterate($name));
     }
 }

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('article_foreign_tags', function (Blueprint $table) {
+        Schema::create('article_foreign_tag', function (Blueprint $table) {
             $table->foreignId('article_id')
                 ->references('id')->on('articles');
             $table->foreignId('foreign_tag_id')
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('article_foreign_tags');
+        Schema::dropIfExists('article_foreign_tag');
     }
 };
