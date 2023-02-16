@@ -76,6 +76,7 @@ class SourceFeed extends Model
         'languages',
         'sort',
         'type',
+        'latest_processed_at',
     ];
 
     protected $dates = [
