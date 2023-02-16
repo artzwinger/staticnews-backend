@@ -30,6 +30,12 @@ class ForeignTagMap extends Model
 
     public $timestamps = false;
 
+    protected $fillable = [
+        'website_id',
+        'foreign_tag_id',
+        'tag_id',
+    ];
+
     public function website(): BelongsTo
     {
         return $this->belongsTo(Website::class);

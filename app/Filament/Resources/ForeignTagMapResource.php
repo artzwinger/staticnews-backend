@@ -33,7 +33,6 @@ class ForeignTagMapResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -53,7 +52,6 @@ class ForeignTagMapResource extends Resource
         return [
             'index' => Pages\ListForeignTagMaps::route('/'),
             'create' => Pages\CreateForeignTagMap::route('/create'),
-            'view' => Pages\ViewForeignTagMap::route('/{record}'),
             'edit' => Pages\EditForeignTagMap::route('/{record}/edit'),
         ];
     }

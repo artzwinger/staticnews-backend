@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 /**
  * App\Models\Tag
@@ -28,5 +29,24 @@ class Tag extends Model
 
     protected $fillable = [
         'name',
+        'slug',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        self::creating(function (Tag $model) {
+            $model->slug = $model->getSlugFromName();
+        });
+
+        self::updating(function (Tag $model) {
+            $model->slug = $model->getSlugFromName();
+        });
+    }
+
+    public function getSlugFromName(): string
+    {
+        return Str::slug(Str::transliterate($this->name));
+    }
 }
