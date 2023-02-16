@@ -4,6 +4,7 @@ namespace App\Filament\Resources\ArticleResource\Pages;
 
 use App\Filament\Resources\ArticleResource;
 use App\Models\Article;
+use App\Models\ForeignTag;
 use App\Models\Website;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Hidden;
@@ -45,6 +46,10 @@ class EditArticle extends EditRecord
             Textarea::make('description')->required(),
             RichEditor::make('content')->required(),
             Select::make('website_id')->options(Website::all()->pluck('url', 'id'))->required(),
+            Select::make('foreignTags')
+                ->searchable()
+                ->multiple()->preload()
+                ->relationship('foreignTags', 'name'),
         ];
     }
 }

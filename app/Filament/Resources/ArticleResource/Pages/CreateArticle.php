@@ -24,6 +24,10 @@ class CreateArticle extends CreateRecord
             Textarea::make('description')->required(),
             RichEditor::make('content')->required(),
             Select::make('website_id')->options(Website::all()->pluck('url', 'id'))->required(),
+            Select::make('foreignTags')
+                ->searchable()
+                ->multiple()->preload()
+                ->relationship('foreignTags', 'name'),
         ];
     }
 }
