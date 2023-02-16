@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Storage;
  * @property int|null $source_feed_id
  * @property string $slug
  * @property string $title
+ * @property string $source_link
+ * @property string $author
  * @property string $description
  * @property string $content
  * @property string|null $image_filename
@@ -36,6 +38,7 @@ use Illuminate\Support\Facades\Storage;
  * @method static Builder|Article newQuery()
  * @method static Builder|Article query()
  * @method static Builder|Article toPublish()
+ * @method static Builder|Article whereAuthor($value)
  * @method static Builder|Article whereContent($value)
  * @method static Builder|Article whereCreatedAt($value)
  * @method static Builder|Article whereDescription($value)
@@ -45,6 +48,7 @@ use Illuminate\Support\Facades\Storage;
  * @method static Builder|Article wherePublishedAt($value)
  * @method static Builder|Article whereSlug($value)
  * @method static Builder|Article whereSourceFeedId($value)
+ * @method static Builder|Article whereSourceLink($value)
  * @method static Builder|Article whereTitle($value)
  * @method static Builder|Article whereUpdated($value)
  * @method static Builder|Article whereWebsiteId($value)

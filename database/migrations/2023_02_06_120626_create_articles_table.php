@@ -18,6 +18,8 @@ return new class extends Migration {
                 ->references('id')->on('source_feeds');
             $table->string('slug', 500)->unique();
             $table->string('title', 500);
+            $table->string('source_link');
+            $table->string('author');
             $table->text('description');
             $table->text('content');
             $table->string('image_filename')->nullable();

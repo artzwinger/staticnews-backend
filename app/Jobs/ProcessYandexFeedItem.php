@@ -51,6 +51,8 @@ class ProcessYandexFeedItem implements ShouldQueue
             'source_feed_id' => $this->feed->id,
             'slug' => $slug,
             'title' => (string)$item?->title,
+            'author' => (string)$item?->author,
+            'source_link' => (string)$item?->link,
             'description' => (string)$item?->description,
             'content' => $content,
             'foreign_created_at' => Carbon::parse((string)$item->pubDate),
