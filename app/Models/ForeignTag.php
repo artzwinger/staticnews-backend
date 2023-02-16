@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 /**
  * App\Models\ForeignTag
@@ -30,4 +31,22 @@ class ForeignTag extends Model
         'name',
         'slug',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        self::creating(function (ForeignTag $model) {
+            $model->slug = $model->getSlugFromName();
+        });
+
+        self::updating(function (ForeignTag $model) {
+            $model->slug = $model->getSlugFromName();
+        });
+    }
+
+    public function getSlugFromName(): string
+    {
+        return Str::slug(Str::transliterate($this->name));
+    }
 }
