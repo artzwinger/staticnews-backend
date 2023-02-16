@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $website_id
  * @property int $foreign_tag_id
  * @property int $tag_id
+ * @property-read \App\Models\ForeignTag|null $foreignTag
+ * @property-read \App\Models\Tag|null $tag
  * @property-read \App\Models\Website $website
  * @method static \Database\Factories\ForeignTagMapFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|ForeignTagMap newModelQuery()
@@ -39,5 +41,15 @@ class ForeignTagMap extends Model
     public function website(): BelongsTo
     {
         return $this->belongsTo(Website::class);
+    }
+
+    public function foreignTag(): BelongsTo
+    {
+        return $this->belongsTo(ForeignTag::class);
+    }
+
+    public function tag(): BelongsTo
+    {
+        return $this->belongsTo(Tag::class);
     }
 }
