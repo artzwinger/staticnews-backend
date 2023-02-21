@@ -59,7 +59,9 @@ class ArticlesToPublish extends Controller
             ];
         }
         $articles->transform(function ($item) use ($tagsByArticleId) {
-            $item->foreign_tags = $tagsByArticleId[$item->id];
+            if (array_key_exists($item->id, $tagsByArticleId)) {
+                $item->foreign_tags = $tagsByArticleId[$item->id];
+            }
             return $item;
         });
         return new JsonResponse(['articles' => $articles]);
