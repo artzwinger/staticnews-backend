@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArticlesToPublish;
 use App\Http\Controllers\PublishArticles;
+use App\Http\Controllers\RedeployAll;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,3 +25,4 @@ Route::get('/login', function () {
 
 Route::get('/articles_to_publish/{websiteCode}', ArticlesToPublish::class)->name('articles_to_publish');
 Route::post('/publish_articles', PublishArticles::class)->name('publish_articles');
+Route::get('/redeploy_all', RedeployAll::class)->name('redeploy_all');
