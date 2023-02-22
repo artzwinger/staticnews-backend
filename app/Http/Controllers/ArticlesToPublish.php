@@ -21,12 +21,14 @@ class ArticlesToPublish extends Controller
         $articles = Article::whereWebsiteId($website->id)
             ->toPublish()->get();
         $foreignTags = ForeignTag::query()
+            ->join('article_foreign_tag', 'foreign_tags.id', '=', 'article_foreign_tag.foreign_tag_id')
+            ->join('articles', 'article_foreign_tag.article_id', '=', 'articles.id')
             ->leftJoin('foreign_tag_maps', function (JoinClause $join) use ($website) {
                 $join->on('foreign_tags.id', '=', 'foreign_tag_maps.foreign_tag_id');
                 $join->on('foreign_tag_maps.website_id', '=', DB::raw($website->id));
+                $join->on('articles.source_feed_id', '=', 'foreign_tag_maps.source_feed_id');
             })
             ->leftJoin('tags', 'foreign_tag_maps.tag_id', '=', 'tags.id')
-            ->join('article_foreign_tag', 'foreign_tags.id', '=', 'article_foreign_tag.foreign_tag_id')
             ->whereIn('article_foreign_tag.article_id', $articles->map(fn($article) => $article->id))
             ->get([
                 'article_foreign_tag.article_id',

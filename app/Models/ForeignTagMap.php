@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $website_id
  * @property int $foreign_tag_id
  * @property int $tag_id
+ * @property int $source_feed_id
  * @property-read \App\Models\ForeignTag|null $foreignTag
  * @property-read \App\Models\Tag|null $tag
  * @property-read \App\Models\Website $website
@@ -22,6 +23,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|ForeignTagMap query()
  * @method static \Illuminate\Database\Eloquent\Builder|ForeignTagMap whereForeignTagId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ForeignTagMap whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ForeignTagMap whereSourceFeedId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ForeignTagMap whereTagId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ForeignTagMap whereWebsiteId($value)
  * @mixin \Eloquent
@@ -36,6 +38,7 @@ class ForeignTagMap extends Model
         'website_id',
         'foreign_tag_id',
         'tag_id',
+        'source_feed_id',
     ];
 
     public function website(): BelongsTo
@@ -46,6 +49,11 @@ class ForeignTagMap extends Model
     public function foreignTag(): BelongsTo
     {
         return $this->belongsTo(ForeignTag::class);
+    }
+
+    public function sourceFeed(): BelongsTo
+    {
+        return $this->belongsTo(SourceFeed::class);
     }
 
     public function tag(): BelongsTo

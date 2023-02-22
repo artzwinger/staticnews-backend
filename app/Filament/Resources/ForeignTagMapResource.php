@@ -29,6 +29,7 @@ class ForeignTagMapResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('id'),
                 Tables\Columns\TextColumn::make('website.url')->searchable(),
+                Tables\Columns\TextColumn::make('sourceFeed.url')->searchable(),
                 Tables\Columns\TextColumn::make('foreignTag.name')
                     ->label('Foreign tag name')
                     ->searchable(),
