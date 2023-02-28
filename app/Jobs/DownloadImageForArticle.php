@@ -38,9 +38,9 @@ class DownloadImageForArticle implements ShouldQueue
     private function downloadImage($imageSrc): string
     {
         $filename = md5($imageSrc) . '.' . $this->getImageExt($imageSrc);
-        if (!Storage::disk('public')->exists($filename)) {
+        if (!Storage::disk('s3')->exists($filename)) {
             $image = file_get_contents($imageSrc);
-            Storage::disk('public')->put($filename, $image);
+            Storage::disk('s3')->put($filename, $image);
         }
         return $filename;
     }

@@ -7,9 +7,35 @@ provider:
   # The stage of the application, e.g. dev, production, staging… ('dev' is the default)
   stage: production
   runtime: provided.al2
+  httpApi:
+    cors: true
+  vpc:
+    securityGroupIds:
+      - sg-0d12c4e050bd8b3ac
+    subnetIds:
+      - subnet-098c1bf3f15e5ff19
   environment:
     QUEUE_CONNECTION: sqs
     SQS_QUEUE: ${construct:jobs.queueUrl}
+    AWS_BUCKET: !Ref Storage
+    APP_NAME: Staticnews
+    APP_ENV: local
+    APP_KEY: "base64:rg0TSo/w99z4Bsax4ELspZkPvlMkWgK6O4M0QHoD+8c="
+    APP_DEBUG: false
+    DB_CONNECTION: mysql
+    DB_HOST: staticnews-db.cpkrawbnohun.eu-central-1.rds.amazonaws.com
+    DB_PORT: 3306
+    DB_DATABASE: staticnews
+    DB_USERNAME: fxbJifqhtT05
+    DB_PASSWORD: 1Tos2V2gMQBi
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action: s3:*
+          Resource:
+            - !Sub '${Storage.Arn}' # the storage bucket
+            - !Sub '${Storage.Arn}/*' # and everything inside
 
 package:
   # Directories to exclude from deployment
@@ -17,11 +43,20 @@ package:
     - '!node_modules/**'
     - '!public/storage'
     - '!resources/assets/**'
-    - '!storage/**'
+    - '!storage/framework/**'
+    - '!storage/app/public/**'
+    - '!storage/logs/**'
     - '!tests/**'
 
 functions:
-  # This function runs the Laravel website/API
+  cronjob:
+    handler: artisan
+    layers:
+      - ${bref:layer.php-82}
+    events:
+      - schedule:
+          rate: rate(1 minute)
+          input: '"schedule:run"'
   web:
     handler: public/index.php
     timeout: 28 # in seconds (API Gateway has a timeout of 29 seconds)
@@ -45,6 +80,11 @@ constructs:
       layers:
         - ${bref:layer.php-82}
 
+resources:
+  Resources:
+    Storage:
+      Type: AWS::S3::Bucket
+
 plugins:
-  # We need to include the Bref plugin
   - ./vendor/bref/bref
+  - serverless-lift
