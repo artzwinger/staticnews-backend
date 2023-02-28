@@ -211,21 +211,7 @@
               "lambdaRole"
             ]
           ]
-        },
-        "ManagedPolicyArns": [
-          {
-            "Fn::Join": [
-              "",
-              [
-                "arn:",
-                {
-                  "Ref": "AWS::Partition"
-                },
-                ":iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
-              ]
-            ]
-          }
-        ]
+        }
       }
     },
     "CronjobLambdaFunction": {
@@ -235,9 +221,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/staticnews/production/1677588242263-2023-02-28T12:44:02.263Z/staticnews.zip"
+          "S3Key": "serverless/staticnews/production/1677604738690-2023-02-28T17:18:58.690Z/staticnews.zip"
         },
-        "Handler": "artisan",
+        "Handler": "enqueue_feeds.php",
         "Runtime": "provided.al2",
         "FunctionName": "staticnews-production-cronjob",
         "MemorySize": 1024,
@@ -248,6 +234,7 @@
             "SQS_QUEUE": {
               "Ref": "jobsQueueCEDBAE3E"
             },
+            "SQS_ENDPOINT": "sqs.eu-central-1.amazonaws.com",
             "FILESYSTEM_DISK": "s3",
             "TABLES_FILESYSTEM_DRIVER": "s3",
             "FORMS_FILESYSTEM_DRIVER": "s3",
@@ -271,14 +258,6 @@
           "Fn::GetAtt": [
             "IamRoleLambdaExecution",
             "Arn"
-          ]
-        },
-        "VpcConfig": {
-          "SecurityGroupIds": [
-            "sg-0d12c4e050bd8b3ac"
-          ],
-          "SubnetIds": [
-            "subnet-098c1bf3f15e5ff19"
           ]
         },
         "Layers": [
@@ -296,7 +275,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/staticnews/production/1677588242263-2023-02-28T12:44:02.263Z/staticnews.zip"
+          "S3Key": "serverless/staticnews/production/1677604738690-2023-02-28T17:18:58.690Z/staticnews.zip"
         },
         "Handler": "public/index.php",
         "Runtime": "provided.al2",
@@ -309,6 +288,7 @@
             "SQS_QUEUE": {
               "Ref": "jobsQueueCEDBAE3E"
             },
+            "SQS_ENDPOINT": "sqs.eu-central-1.amazonaws.com",
             "FILESYSTEM_DISK": "s3",
             "TABLES_FILESYSTEM_DRIVER": "s3",
             "FORMS_FILESYSTEM_DRIVER": "s3",
@@ -332,14 +312,6 @@
           "Fn::GetAtt": [
             "IamRoleLambdaExecution",
             "Arn"
-          ]
-        },
-        "VpcConfig": {
-          "SecurityGroupIds": [
-            "sg-0d12c4e050bd8b3ac"
-          ],
-          "SubnetIds": [
-            "subnet-098c1bf3f15e5ff19"
           ]
         },
         "Layers": [
@@ -357,7 +329,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/staticnews/production/1677588242263-2023-02-28T12:44:02.263Z/staticnews.zip"
+          "S3Key": "serverless/staticnews/production/1677604738690-2023-02-28T17:18:58.690Z/staticnews.zip"
         },
         "Handler": "artisan",
         "Runtime": "provided.al2",
@@ -370,6 +342,7 @@
             "SQS_QUEUE": {
               "Ref": "jobsQueueCEDBAE3E"
             },
+            "SQS_ENDPOINT": "sqs.eu-central-1.amazonaws.com",
             "FILESYSTEM_DISK": "s3",
             "TABLES_FILESYSTEM_DRIVER": "s3",
             "FORMS_FILESYSTEM_DRIVER": "s3",
@@ -393,14 +366,6 @@
           "Fn::GetAtt": [
             "IamRoleLambdaExecution",
             "Arn"
-          ]
-        },
-        "VpcConfig": {
-          "SecurityGroupIds": [
-            "sg-0d12c4e050bd8b3ac"
-          ],
-          "SubnetIds": [
-            "subnet-098c1bf3f15e5ff19"
           ]
         },
         "Layers": [
@@ -419,19 +384,20 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/staticnews/production/1677588242263-2023-02-28T12:44:02.263Z/staticnews.zip"
+          "S3Key": "serverless/staticnews/production/1677604738690-2023-02-28T17:18:58.690Z/staticnews.zip"
         },
         "Handler": "worker.php",
         "Runtime": "provided.al2",
         "FunctionName": "staticnews-production-jobsWorker",
         "MemorySize": 1024,
-        "Timeout": 6,
+        "Timeout": 20,
         "Environment": {
           "Variables": {
             "QUEUE_CONNECTION": "sqs",
             "SQS_QUEUE": {
               "Ref": "jobsQueueCEDBAE3E"
             },
+            "SQS_ENDPOINT": "sqs.eu-central-1.amazonaws.com",
             "FILESYSTEM_DISK": "s3",
             "TABLES_FILESYSTEM_DRIVER": "s3",
             "FORMS_FILESYSTEM_DRIVER": "s3",
@@ -457,14 +423,6 @@
             "Arn"
           ]
         },
-        "VpcConfig": {
-          "SecurityGroupIds": [
-            "sg-0d12c4e050bd8b3ac"
-          ],
-          "SubnetIds": [
-            "subnet-098c1bf3f15e5ff19"
-          ]
-        },
         "Layers": [
           "arn:aws:lambda:eu-central-1:209497400698:layer:php-82:18"
         ]
@@ -473,44 +431,44 @@
         "JobsWorkerLogGroup"
       ]
     },
-    "CronjobLambdaVersionydpERdTdOrfEmwzMJ3MXGMWsN9cqrJfjcGljZqf9I": {
+    "CronjobLambdaVersion23Uk8wHWVp7S1Peq8edOqfMFKDqAxUHwEzEcB4o4Z3E": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CronjobLambdaFunction"
         },
-        "CodeSha256": "ZESlFdwjoHqkcZH9PrD2otjT7BXzSnt58zuYfh3bVCo="
+        "CodeSha256": "85bQrdTepiqnGAkuaVhiYCAPuONqnkbiNvoiXf1NNXQ="
       }
     },
-    "WebLambdaVersioneLufQopwlHLwf2pNOEz891BaJWd2Qp4xsVzrXpTwR8": {
+    "WebLambdaVersionykulgdx5tRAZaJfyMuTaYJew1u0vVCSOFi4Sg5BPhM": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "WebLambdaFunction"
         },
-        "CodeSha256": "ZESlFdwjoHqkcZH9PrD2otjT7BXzSnt58zuYfh3bVCo="
+        "CodeSha256": "85bQrdTepiqnGAkuaVhiYCAPuONqnkbiNvoiXf1NNXQ="
       }
     },
-    "ArtisanLambdaVersionwdkfIS6XoKX7TPYjljWlkWuprERtIv6ltgAVs4MfP1c": {
+    "ArtisanLambdaVersion7bv1LQOc3FBnWiE6l5i7Avp9eDarC0eJ0asWaMlD8s": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "ArtisanLambdaFunction"
         },
-        "CodeSha256": "ZESlFdwjoHqkcZH9PrD2otjT7BXzSnt58zuYfh3bVCo="
+        "CodeSha256": "85bQrdTepiqnGAkuaVhiYCAPuONqnkbiNvoiXf1NNXQ="
       }
     },
-    "JobsWorkerLambdaVersionLGuugXhApQwCO4XWqLtBaIGFbm5vTVzd1sEegFiOdE": {
+    "JobsWorkerLambdaVersionijYD3q7N3bwWrdBLWWN4OhrLzR9YdzN5EdXctdTTM": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "JobsWorkerLambdaFunction"
         },
-        "CodeSha256": "ZESlFdwjoHqkcZH9PrD2otjT7BXzSnt58zuYfh3bVCo="
+        "CodeSha256": "85bQrdTepiqnGAkuaVhiYCAPuONqnkbiNvoiXf1NNXQ="
       }
     },
     "CronjobEventsRuleSchedule1": {
@@ -520,7 +478,6 @@
         "State": "ENABLED",
         "Targets": [
           {
-            "Input": "\"schedule:run\"",
             "Arn": {
               "Fn::GetAtt": [
                 "CronjobLambdaFunction",
@@ -760,7 +717,7 @@
           },
           "maxReceiveCount": 3
         },
-        "VisibilityTimeout": 36
+        "VisibilityTimeout": 120
       },
       "UpdateReplacePolicy": "Delete",
       "DeletionPolicy": "Delete"
@@ -778,7 +735,7 @@
     "CronjobLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CronjobLambdaVersionydpERdTdOrfEmwzMJ3MXGMWsN9cqrJfjcGljZqf9I"
+        "Ref": "CronjobLambdaVersion23Uk8wHWVp7S1Peq8edOqfMFKDqAxUHwEzEcB4o4Z3E"
       },
       "Export": {
         "Name": "sls-staticnews-production-CronjobLambdaFunctionQualifiedArn"
@@ -787,7 +744,7 @@
     "WebLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "WebLambdaVersioneLufQopwlHLwf2pNOEz891BaJWd2Qp4xsVzrXpTwR8"
+        "Ref": "WebLambdaVersionykulgdx5tRAZaJfyMuTaYJew1u0vVCSOFi4Sg5BPhM"
       },
       "Export": {
         "Name": "sls-staticnews-production-WebLambdaFunctionQualifiedArn"
@@ -796,7 +753,7 @@
     "ArtisanLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "ArtisanLambdaVersionwdkfIS6XoKX7TPYjljWlkWuprERtIv6ltgAVs4MfP1c"
+        "Ref": "ArtisanLambdaVersion7bv1LQOc3FBnWiE6l5i7Avp9eDarC0eJ0asWaMlD8s"
       },
       "Export": {
         "Name": "sls-staticnews-production-ArtisanLambdaFunctionQualifiedArn"
@@ -805,7 +762,7 @@
     "JobsWorkerLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "JobsWorkerLambdaVersionLGuugXhApQwCO4XWqLtBaIGFbm5vTVzd1sEegFiOdE"
+        "Ref": "JobsWorkerLambdaVersionijYD3q7N3bwWrdBLWWN4OhrLzR9YdzN5EdXctdTTM"
       },
       "Export": {
         "Name": "sls-staticnews-production-JobsWorkerLambdaFunctionQualifiedArn"

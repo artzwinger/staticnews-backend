@@ -9,14 +9,10 @@ provider:
   runtime: provided.al2
   httpApi:
     cors: true
-  vpc:
-    securityGroupIds:
-      - sg-0d12c4e050bd8b3ac
-    subnetIds:
-      - subnet-098c1bf3f15e5ff19
   environment:
     QUEUE_CONNECTION: sqs
     SQS_QUEUE: ${construct:jobs.queueUrl}
+    SQS_ENDPOINT: sqs.eu-central-1.amazonaws.com
     FILESYSTEM_DISK: s3
     TABLES_FILESYSTEM_DRIVER: s3
     FORMS_FILESYSTEM_DRIVER: s3
@@ -54,14 +50,12 @@ package:
 
 functions:
   cronjob:
-    handler: artisan
+    handler: enqueue_feeds.php
     layers:
       - ${bref:layer.php-82}
     events:
       - schedule:
           rate: rate(1 minute)
-          input:
-            - '"schedule:run"'
   web:
     handler: public/index.php
     timeout: 28 # in seconds (API Gateway has a timeout of 29 seconds)
@@ -82,6 +76,7 @@ constructs:
     type: queue
     worker:
       handler: worker.php
+      timeout: 20
       layers:
         - ${bref:layer.php-82}
 
