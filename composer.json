@@ -6,13 +6,15 @@
     "license": "MIT",
     "require": {
         "php": "^8.2.2",
+        "ext-dom": "*",
+        "ext-simplexml": "*",
+        "bref/bref": "^1.7",
+        "bref/laravel-bridge": "^1.2",
         "filament/filament": "^2.16",
         "guzzlehttp/guzzle": "^7.5",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
-        "laravel/tinker": "^2.7",
-        "ext-simplexml": "*",
-        "ext-dom": "*"
+        "laravel/tinker": "^2.7"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.13",
