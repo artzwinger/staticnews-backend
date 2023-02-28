@@ -17,11 +17,15 @@ provider:
   environment:
     QUEUE_CONNECTION: sqs
     SQS_QUEUE: ${construct:jobs.queueUrl}
+    FILESYSTEM_DISK: s3
+    TABLES_FILESYSTEM_DRIVER: s3
+    FORMS_FILESYSTEM_DRIVER: s3
+    FILAMENT_FILESYSTEM_DRIVER: s3
     AWS_BUCKET: !Ref Storage
     APP_NAME: Staticnews
     APP_ENV: local
-    APP_KEY: "base64:rg0TSo/w99z4Bsax4ELspZkPvlMkWgK6O4M0QHoD+8c="
-    APP_DEBUG: false
+    APP_KEY: "base64:aQYnBivcqesBAqaT5wkC7I5NvpDAADoMkd5DLRTo3+s="
+    APP_DEBUG: true
     DB_CONNECTION: mysql
     DB_HOST: staticnews-db.cpkrawbnohun.eu-central-1.rds.amazonaws.com
     DB_PORT: 3306
@@ -56,7 +60,8 @@ functions:
     events:
       - schedule:
           rate: rate(1 minute)
-          input: '"schedule:run"'
+          input:
+            - '"schedule:run"'
   web:
     handler: public/index.php
     timeout: 28 # in seconds (API Gateway has a timeout of 29 seconds)
@@ -83,7 +88,29 @@ constructs:
 resources:
   Resources:
     Storage:
+      Properties:
+        CorsConfiguration:
+          CorsRules:
+            - AllowedMethods:
+                - GET
+                - PUT
+                - POST
+                - HEAD
+              AllowedOrigins:
+                - "*"
+              AllowedHeaders:
+                - "*"
       Type: AWS::S3::Bucket
+    StorageBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket: !Ref Storage # References the bucket we defined above
+        PolicyDocument:
+          Statement:
+            - Effect: Allow
+              Principal: '*' # everyone
+              Action: 's3:GetObject' # to read
+              Resource: !Sub '${Storage.Arn}/*' # things in the bucket
 
 plugins:
   - ./vendor/bref/bref

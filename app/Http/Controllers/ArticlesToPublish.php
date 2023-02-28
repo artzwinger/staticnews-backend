@@ -18,8 +18,11 @@ class ArticlesToPublish extends Controller
     public function __invoke($websiteCode): JsonResponse
     {
         $website = Website::whereCode($websiteCode)->first();
+        $total = Article::whereWebsiteId($website->id)
+            ->toPublish()->count();
         $articles = Article::whereWebsiteId($website->id)
-            ->toPublish()->get();
+            ->toPublish()->paginate(50)->items();
+        $currentPageIds = array_map(fn($article) => $article->id, $articles);
         $foreignTags = ForeignTag::query()
             ->join('article_foreign_tag', 'foreign_tags.id', '=', 'article_foreign_tag.foreign_tag_id')
             ->join('articles', 'article_foreign_tag.article_id', '=', 'articles.id')
@@ -29,7 +32,7 @@ class ArticlesToPublish extends Controller
                 $join->on('articles.source_feed_id', '=', 'foreign_tag_maps.source_feed_id');
             })
             ->leftJoin('tags', 'foreign_tag_maps.tag_id', '=', 'tags.id')
-            ->whereIn('article_foreign_tag.article_id', $articles->map(fn($article) => $article->id))
+            ->whereIn('article_foreign_tag.article_id', $currentPageIds)
             ->get([
                 'article_foreign_tag.article_id',
                 'article_foreign_tag.foreign_tag_id',
@@ -60,12 +63,11 @@ class ArticlesToPublish extends Controller
                 'slug' => $slug,
             ];
         }
-        $articles->transform(function ($item) use ($tagsByArticleId) {
-            if (array_key_exists($item->id, $tagsByArticleId)) {
-                $item->foreign_tags = $tagsByArticleId[$item->id];
+        foreach ($articles as &$article) {
+            if (array_key_exists($article->id, $tagsByArticleId)) {
+                $article["foreign_tags"] = $tagsByArticleId[$article->id];
             }
-            return $item;
-        });
-        return new JsonResponse(['articles' => $articles]);
+        }
+        return new JsonResponse(['articles' => $articles, 'total' => $total]);
     }
 }

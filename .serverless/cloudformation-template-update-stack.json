@@ -74,25 +74,25 @@
     "CronjobLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/staticnews-dev-cronjob"
+        "LogGroupName": "/aws/lambda/staticnews-production-cronjob"
       }
     },
     "WebLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/staticnews-dev-web"
+        "LogGroupName": "/aws/lambda/staticnews-production-web"
       }
     },
     "ArtisanLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/staticnews-dev-artisan"
+        "LogGroupName": "/aws/lambda/staticnews-production-artisan"
       }
     },
     "JobsWorkerLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/staticnews-dev-jobsWorker"
+        "LogGroupName": "/aws/lambda/staticnews-production-jobsWorker"
       }
     },
     "IamRoleLambdaExecution": {
@@ -121,7 +121,7 @@
                 "-",
                 [
                   "staticnews",
-                  "dev",
+                  "production",
                   "lambda"
                 ]
               ]
@@ -137,7 +137,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/staticnews-dev*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/staticnews-production*:*"
                     }
                   ]
                 },
@@ -148,7 +148,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/staticnews-dev*:*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/staticnews-production*:*:*"
                     }
                   ]
                 },
@@ -204,7 +204,7 @@
             "-",
             [
               "staticnews",
-              "dev",
+              "production",
               {
                 "Ref": "AWS::Region"
               },
@@ -235,11 +235,11 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/staticnews/dev/1677573035332-2023-02-28T08:30:35.332Z/staticnews.zip"
+          "S3Key": "serverless/staticnews/production/1677588026604-2023-02-28T12:40:26.604Z/staticnews.zip"
         },
         "Handler": "artisan",
         "Runtime": "provided.al2",
-        "FunctionName": "staticnews-dev-cronjob",
+        "FunctionName": "staticnews-production-cronjob",
         "MemorySize": 1024,
         "Timeout": 6,
         "Environment": {
@@ -248,13 +248,17 @@
             "SQS_QUEUE": {
               "Ref": "jobsQueueCEDBAE3E"
             },
+            "FILESYSTEM_DISK": "s3",
+            "TABLES_FILESYSTEM_DRIVER": "s3",
+            "FORMS_FILESYSTEM_DRIVER": "s3",
+            "FILAMENT_FILESYSTEM_DRIVER": "s3",
             "AWS_BUCKET": {
               "Ref": "Storage"
             },
             "APP_NAME": "Staticnews",
             "APP_ENV": "local",
-            "APP_KEY": "base64:rg0TSo/w99z4Bsax4ELspZkPvlMkWgK6O4M0QHoD+8c=",
-            "APP_DEBUG": "false",
+            "APP_KEY": "base64:aQYnBivcqesBAqaT5wkC7I5NvpDAADoMkd5DLRTo3+s=",
+            "APP_DEBUG": "true",
             "DB_CONNECTION": "mysql",
             "DB_HOST": "staticnews-db.cpkrawbnohun.eu-central-1.rds.amazonaws.com",
             "DB_PORT": "3306",
@@ -292,11 +296,11 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/staticnews/dev/1677573035332-2023-02-28T08:30:35.332Z/staticnews.zip"
+          "S3Key": "serverless/staticnews/production/1677588026604-2023-02-28T12:40:26.604Z/staticnews.zip"
         },
         "Handler": "public/index.php",
         "Runtime": "provided.al2",
-        "FunctionName": "staticnews-dev-web",
+        "FunctionName": "staticnews-production-web",
         "MemorySize": 1024,
         "Timeout": 28,
         "Environment": {
@@ -305,13 +309,17 @@
             "SQS_QUEUE": {
               "Ref": "jobsQueueCEDBAE3E"
             },
+            "FILESYSTEM_DISK": "s3",
+            "TABLES_FILESYSTEM_DRIVER": "s3",
+            "FORMS_FILESYSTEM_DRIVER": "s3",
+            "FILAMENT_FILESYSTEM_DRIVER": "s3",
             "AWS_BUCKET": {
               "Ref": "Storage"
             },
             "APP_NAME": "Staticnews",
             "APP_ENV": "local",
-            "APP_KEY": "base64:rg0TSo/w99z4Bsax4ELspZkPvlMkWgK6O4M0QHoD+8c=",
-            "APP_DEBUG": "false",
+            "APP_KEY": "base64:aQYnBivcqesBAqaT5wkC7I5NvpDAADoMkd5DLRTo3+s=",
+            "APP_DEBUG": "true",
             "DB_CONNECTION": "mysql",
             "DB_HOST": "staticnews-db.cpkrawbnohun.eu-central-1.rds.amazonaws.com",
             "DB_PORT": "3306",
@@ -349,11 +357,11 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/staticnews/dev/1677573035332-2023-02-28T08:30:35.332Z/staticnews.zip"
+          "S3Key": "serverless/staticnews/production/1677588026604-2023-02-28T12:40:26.604Z/staticnews.zip"
         },
         "Handler": "artisan",
         "Runtime": "provided.al2",
-        "FunctionName": "staticnews-dev-artisan",
+        "FunctionName": "staticnews-production-artisan",
         "MemorySize": 1024,
         "Timeout": 120,
         "Environment": {
@@ -362,13 +370,17 @@
             "SQS_QUEUE": {
               "Ref": "jobsQueueCEDBAE3E"
             },
+            "FILESYSTEM_DISK": "s3",
+            "TABLES_FILESYSTEM_DRIVER": "s3",
+            "FORMS_FILESYSTEM_DRIVER": "s3",
+            "FILAMENT_FILESYSTEM_DRIVER": "s3",
             "AWS_BUCKET": {
               "Ref": "Storage"
             },
             "APP_NAME": "Staticnews",
             "APP_ENV": "local",
-            "APP_KEY": "base64:rg0TSo/w99z4Bsax4ELspZkPvlMkWgK6O4M0QHoD+8c=",
-            "APP_DEBUG": "false",
+            "APP_KEY": "base64:aQYnBivcqesBAqaT5wkC7I5NvpDAADoMkd5DLRTo3+s=",
+            "APP_DEBUG": "true",
             "DB_CONNECTION": "mysql",
             "DB_HOST": "staticnews-db.cpkrawbnohun.eu-central-1.rds.amazonaws.com",
             "DB_PORT": "3306",
@@ -407,11 +419,11 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/staticnews/dev/1677573035332-2023-02-28T08:30:35.332Z/staticnews.zip"
+          "S3Key": "serverless/staticnews/production/1677588026604-2023-02-28T12:40:26.604Z/staticnews.zip"
         },
         "Handler": "worker.php",
         "Runtime": "provided.al2",
-        "FunctionName": "staticnews-dev-jobsWorker",
+        "FunctionName": "staticnews-production-jobsWorker",
         "MemorySize": 1024,
         "Timeout": 6,
         "Environment": {
@@ -420,13 +432,17 @@
             "SQS_QUEUE": {
               "Ref": "jobsQueueCEDBAE3E"
             },
+            "FILESYSTEM_DISK": "s3",
+            "TABLES_FILESYSTEM_DRIVER": "s3",
+            "FORMS_FILESYSTEM_DRIVER": "s3",
+            "FILAMENT_FILESYSTEM_DRIVER": "s3",
             "AWS_BUCKET": {
               "Ref": "Storage"
             },
             "APP_NAME": "Staticnews",
             "APP_ENV": "local",
-            "APP_KEY": "base64:rg0TSo/w99z4Bsax4ELspZkPvlMkWgK6O4M0QHoD+8c=",
-            "APP_DEBUG": "false",
+            "APP_KEY": "base64:aQYnBivcqesBAqaT5wkC7I5NvpDAADoMkd5DLRTo3+s=",
+            "APP_DEBUG": "true",
             "DB_CONNECTION": "mysql",
             "DB_HOST": "staticnews-db.cpkrawbnohun.eu-central-1.rds.amazonaws.com",
             "DB_PORT": "3306",
@@ -457,44 +473,44 @@
         "JobsWorkerLogGroup"
       ]
     },
-    "CronjobLambdaVersionx9Ylp5VZzlUblUG2eJTIwDjd4Cx2VQCNSzGPAw9xYgA": {
+    "CronjobLambdaVersionFGFyv8w9GflhS8VDwOg9YnDENStXoyZiJBeiUa2MAw": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CronjobLambdaFunction"
         },
-        "CodeSha256": "BuGv8c80pFgTY8OAUQkXXCWv7BTCo8fNwWpc9Bq9COE="
+        "CodeSha256": "ppKD0WkIaXLMpZAwUoSfkG13TjYvm6/OYikWP84xdig="
       }
     },
-    "WebLambdaVersiondma7pAuXiuuw75KsFfkT6EnTgoS7alk8JLmDdqSuTM": {
+    "WebLambdaVersion9ytOXEN5KEMwKWiw0Vxd4NQVK936VIv5k1o6PgKuI": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "WebLambdaFunction"
         },
-        "CodeSha256": "BuGv8c80pFgTY8OAUQkXXCWv7BTCo8fNwWpc9Bq9COE="
+        "CodeSha256": "ppKD0WkIaXLMpZAwUoSfkG13TjYvm6/OYikWP84xdig="
       }
     },
-    "ArtisanLambdaVersionnzngPIjwcO9caWmnxJt3N1UvexZxRzF3JrLQFapBU": {
+    "ArtisanLambdaVersionqeqyLeUSGRrWQXYSj3hqRULKfoRo072DWfJ9ELHXg": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "ArtisanLambdaFunction"
         },
-        "CodeSha256": "BuGv8c80pFgTY8OAUQkXXCWv7BTCo8fNwWpc9Bq9COE="
+        "CodeSha256": "ppKD0WkIaXLMpZAwUoSfkG13TjYvm6/OYikWP84xdig="
       }
     },
-    "JobsWorkerLambdaVersion6FVji92L44BKV3jHPGsR1aif0sdM6mTUurEq39kY": {
+    "JobsWorkerLambdaVersionojya9kf5mlxqft5X1hVdki5WmvifKMonB4xhzYI1o": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "JobsWorkerLambdaFunction"
         },
-        "CodeSha256": "BuGv8c80pFgTY8OAUQkXXCWv7BTCo8fNwWpc9Bq9COE="
+        "CodeSha256": "ppKD0WkIaXLMpZAwUoSfkG13TjYvm6/OYikWP84xdig="
       }
     },
     "CronjobEventsRuleSchedule1": {
@@ -564,7 +580,7 @@
     "HttpApi": {
       "Type": "AWS::ApiGatewayV2::Api",
       "Properties": {
-        "Name": "dev-staticnews",
+        "Name": "production-staticnews",
         "ProtocolType": "HTTP",
         "CorsConfiguration": {
           "AllowHeaders": [
@@ -680,13 +696,53 @@
       "DependsOn": "HttpApiIntegrationWeb"
     },
     "Storage": {
+      "Properties": {
+        "CorsConfiguration": {
+          "CorsRules": [
+            {
+              "AllowedMethods": [
+                "GET",
+                "PUT",
+                "POST",
+                "HEAD"
+              ],
+              "AllowedOrigins": [
+                "*"
+              ],
+              "AllowedHeaders": [
+                "*"
+              ]
+            }
+          ]
+        }
+      },
       "Type": "AWS::S3::Bucket"
+    },
+    "StorageBucketPolicy": {
+      "Type": "AWS::S3::BucketPolicy",
+      "Properties": {
+        "Bucket": {
+          "Ref": "Storage"
+        },
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": "*",
+              "Action": "s3:GetObject",
+              "Resource": {
+                "Fn::Sub": "${Storage.Arn}/*"
+              }
+            }
+          ]
+        }
+      }
     },
     "jobsDlqD18CF374": {
       "Type": "AWS::SQS::Queue",
       "Properties": {
         "MessageRetentionPeriod": 1209600,
-        "QueueName": "staticnews-dev-jobs-dlq"
+        "QueueName": "staticnews-production-jobs-dlq"
       },
       "UpdateReplacePolicy": "Delete",
       "DeletionPolicy": "Delete"
@@ -694,7 +750,7 @@
     "jobsQueueCEDBAE3E": {
       "Type": "AWS::SQS::Queue",
       "Properties": {
-        "QueueName": "staticnews-dev-jobs",
+        "QueueName": "staticnews-production-jobs",
         "RedrivePolicy": {
           "deadLetterTargetArn": {
             "Fn::GetAtt": [
@@ -716,43 +772,43 @@
         "Ref": "ServerlessDeploymentBucket"
       },
       "Export": {
-        "Name": "sls-staticnews-dev-ServerlessDeploymentBucketName"
+        "Name": "sls-staticnews-production-ServerlessDeploymentBucketName"
       }
     },
     "CronjobLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CronjobLambdaVersionx9Ylp5VZzlUblUG2eJTIwDjd4Cx2VQCNSzGPAw9xYgA"
+        "Ref": "CronjobLambdaVersionFGFyv8w9GflhS8VDwOg9YnDENStXoyZiJBeiUa2MAw"
       },
       "Export": {
-        "Name": "sls-staticnews-dev-CronjobLambdaFunctionQualifiedArn"
+        "Name": "sls-staticnews-production-CronjobLambdaFunctionQualifiedArn"
       }
     },
     "WebLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "WebLambdaVersiondma7pAuXiuuw75KsFfkT6EnTgoS7alk8JLmDdqSuTM"
+        "Ref": "WebLambdaVersion9ytOXEN5KEMwKWiw0Vxd4NQVK936VIv5k1o6PgKuI"
       },
       "Export": {
-        "Name": "sls-staticnews-dev-WebLambdaFunctionQualifiedArn"
+        "Name": "sls-staticnews-production-WebLambdaFunctionQualifiedArn"
       }
     },
     "ArtisanLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "ArtisanLambdaVersionnzngPIjwcO9caWmnxJt3N1UvexZxRzF3JrLQFapBU"
+        "Ref": "ArtisanLambdaVersionqeqyLeUSGRrWQXYSj3hqRULKfoRo072DWfJ9ELHXg"
       },
       "Export": {
-        "Name": "sls-staticnews-dev-ArtisanLambdaFunctionQualifiedArn"
+        "Name": "sls-staticnews-production-ArtisanLambdaFunctionQualifiedArn"
       }
     },
     "JobsWorkerLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "JobsWorkerLambdaVersion6FVji92L44BKV3jHPGsR1aif0sdM6mTUurEq39kY"
+        "Ref": "JobsWorkerLambdaVersionojya9kf5mlxqft5X1hVdki5WmvifKMonB4xhzYI1o"
       },
       "Export": {
-        "Name": "sls-staticnews-dev-JobsWorkerLambdaFunctionQualifiedArn"
+        "Name": "sls-staticnews-production-JobsWorkerLambdaFunctionQualifiedArn"
       }
     },
     "HttpApiId": {
@@ -761,7 +817,7 @@
         "Ref": "HttpApi"
       },
       "Export": {
-        "Name": "sls-staticnews-dev-HttpApiId"
+        "Name": "sls-staticnews-production-HttpApiId"
       }
     },
     "HttpApiUrl": {
@@ -786,7 +842,7 @@
         ]
       },
       "Export": {
-        "Name": "sls-staticnews-dev-HttpApiUrl"
+        "Name": "sls-staticnews-production-HttpApiUrl"
       }
     },
     "jobsQueueArnA5A2FF7E": {
