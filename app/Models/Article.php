@@ -77,6 +77,15 @@ class Article extends Model
         'published_at',
     ];
 
+    protected $appends = [
+        'image_url',
+    ];
+
+    public function getImageUrlAttribute(): ?string
+    {
+        return $this->image_filename ? Storage::url($this->image_filename) : null;
+    }
+
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);

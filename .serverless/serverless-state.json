@@ -293,7 +293,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/staticnews/production/1677588026604-2023-02-28T12:40:26.604Z/staticnews.zip"
+                "S3Key": "serverless/staticnews/production/1677588242263-2023-02-28T12:44:02.263Z/staticnews.zip"
               },
               "Handler": "artisan",
               "Runtime": "provided.al2",
@@ -354,7 +354,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/staticnews/production/1677588026604-2023-02-28T12:40:26.604Z/staticnews.zip"
+                "S3Key": "serverless/staticnews/production/1677588242263-2023-02-28T12:44:02.263Z/staticnews.zip"
               },
               "Handler": "public/index.php",
               "Runtime": "provided.al2",
@@ -415,7 +415,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/staticnews/production/1677588026604-2023-02-28T12:40:26.604Z/staticnews.zip"
+                "S3Key": "serverless/staticnews/production/1677588242263-2023-02-28T12:44:02.263Z/staticnews.zip"
               },
               "Handler": "artisan",
               "Runtime": "provided.al2",
@@ -477,7 +477,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/staticnews/production/1677588026604-2023-02-28T12:40:26.604Z/staticnews.zip"
+                "S3Key": "serverless/staticnews/production/1677588242263-2023-02-28T12:44:02.263Z/staticnews.zip"
               },
               "Handler": "worker.php",
               "Runtime": "provided.al2",
@@ -531,44 +531,44 @@
               "JobsWorkerLogGroup"
             ]
           },
-          "CronjobLambdaVersionFGFyv8w9GflhS8VDwOg9YnDENStXoyZiJBeiUa2MAw": {
+          "CronjobLambdaVersionydpERdTdOrfEmwzMJ3MXGMWsN9cqrJfjcGljZqf9I": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CronjobLambdaFunction"
               },
-              "CodeSha256": "ppKD0WkIaXLMpZAwUoSfkG13TjYvm6/OYikWP84xdig="
+              "CodeSha256": "ZESlFdwjoHqkcZH9PrD2otjT7BXzSnt58zuYfh3bVCo="
             }
           },
-          "WebLambdaVersion9ytOXEN5KEMwKWiw0Vxd4NQVK936VIv5k1o6PgKuI": {
+          "WebLambdaVersioneLufQopwlHLwf2pNOEz891BaJWd2Qp4xsVzrXpTwR8": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "WebLambdaFunction"
               },
-              "CodeSha256": "ppKD0WkIaXLMpZAwUoSfkG13TjYvm6/OYikWP84xdig="
+              "CodeSha256": "ZESlFdwjoHqkcZH9PrD2otjT7BXzSnt58zuYfh3bVCo="
             }
           },
-          "ArtisanLambdaVersionqeqyLeUSGRrWQXYSj3hqRULKfoRo072DWfJ9ELHXg": {
+          "ArtisanLambdaVersionwdkfIS6XoKX7TPYjljWlkWuprERtIv6ltgAVs4MfP1c": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "ArtisanLambdaFunction"
               },
-              "CodeSha256": "ppKD0WkIaXLMpZAwUoSfkG13TjYvm6/OYikWP84xdig="
+              "CodeSha256": "ZESlFdwjoHqkcZH9PrD2otjT7BXzSnt58zuYfh3bVCo="
             }
           },
-          "JobsWorkerLambdaVersionojya9kf5mlxqft5X1hVdki5WmvifKMonB4xhzYI1o": {
+          "JobsWorkerLambdaVersionLGuugXhApQwCO4XWqLtBaIGFbm5vTVzd1sEegFiOdE": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "JobsWorkerLambdaFunction"
               },
-              "CodeSha256": "ppKD0WkIaXLMpZAwUoSfkG13TjYvm6/OYikWP84xdig="
+              "CodeSha256": "ZESlFdwjoHqkcZH9PrD2otjT7BXzSnt58zuYfh3bVCo="
             }
           },
           "CronjobEventsRuleSchedule1": {
@@ -833,7 +833,7 @@
           "CronjobLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CronjobLambdaVersionFGFyv8w9GflhS8VDwOg9YnDENStXoyZiJBeiUa2MAw"
+              "Ref": "CronjobLambdaVersionydpERdTdOrfEmwzMJ3MXGMWsN9cqrJfjcGljZqf9I"
             },
             "Export": {
               "Name": "sls-staticnews-production-CronjobLambdaFunctionQualifiedArn"
@@ -842,7 +842,7 @@
           "WebLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "WebLambdaVersion9ytOXEN5KEMwKWiw0Vxd4NQVK936VIv5k1o6PgKuI"
+              "Ref": "WebLambdaVersioneLufQopwlHLwf2pNOEz891BaJWd2Qp4xsVzrXpTwR8"
             },
             "Export": {
               "Name": "sls-staticnews-production-WebLambdaFunctionQualifiedArn"
@@ -851,7 +851,7 @@
           "ArtisanLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "ArtisanLambdaVersionqeqyLeUSGRrWQXYSj3hqRULKfoRo072DWfJ9ELHXg"
+              "Ref": "ArtisanLambdaVersionwdkfIS6XoKX7TPYjljWlkWuprERtIv6ltgAVs4MfP1c"
             },
             "Export": {
               "Name": "sls-staticnews-production-ArtisanLambdaFunctionQualifiedArn"
@@ -860,7 +860,7 @@
           "JobsWorkerLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "JobsWorkerLambdaVersionojya9kf5mlxqft5X1hVdki5WmvifKMonB4xhzYI1o"
+              "Ref": "JobsWorkerLambdaVersionLGuugXhApQwCO4XWqLtBaIGFbm5vTVzd1sEegFiOdE"
             },
             "Export": {
               "Name": "sls-staticnews-production-JobsWorkerLambdaFunctionQualifiedArn"
@@ -1036,7 +1036,7 @@
         "timeout": 6,
         "runtime": "provided.al2",
         "vpc": {},
-        "versionLogicalId": "CronjobLambdaVersionFGFyv8w9GflhS8VDwOg9YnDENStXoyZiJBeiUa2MAw"
+        "versionLogicalId": "CronjobLambdaVersionydpERdTdOrfEmwzMJ3MXGMWsN9cqrJfjcGljZqf9I"
       },
       "web": {
         "handler": "public/index.php",
@@ -1055,7 +1055,7 @@
         "memory": 1024,
         "runtime": "provided.al2",
         "vpc": {},
-        "versionLogicalId": "WebLambdaVersion9ytOXEN5KEMwKWiw0Vxd4NQVK936VIv5k1o6PgKuI"
+        "versionLogicalId": "WebLambdaVersioneLufQopwlHLwf2pNOEz891BaJWd2Qp4xsVzrXpTwR8"
       },
       "artisan": {
         "handler": "artisan",
@@ -1069,7 +1069,7 @@
         "memory": 1024,
         "runtime": "provided.al2",
         "vpc": {},
-        "versionLogicalId": "ArtisanLambdaVersionqeqyLeUSGRrWQXYSj3hqRULKfoRo072DWfJ9ELHXg"
+        "versionLogicalId": "ArtisanLambdaVersionwdkfIS6XoKX7TPYjljWlkWuprERtIv6ltgAVs4MfP1c"
       },
       "jobsWorker": {
         "handler": "worker.php",
@@ -1094,7 +1094,7 @@
         "timeout": 6,
         "runtime": "provided.al2",
         "vpc": {},
-        "versionLogicalId": "JobsWorkerLambdaVersionojya9kf5mlxqft5X1hVdki5WmvifKMonB4xhzYI1o"
+        "versionLogicalId": "JobsWorkerLambdaVersionLGuugXhApQwCO4XWqLtBaIGFbm5vTVzd1sEegFiOdE"
       }
     },
     "resources": {
@@ -1216,7 +1216,7 @@
         },
         "environment": {
           "QUEUE_CONNECTION": "sqs",
-          "SQS_QUEUE": "${Token[TOKEN.581]}",
+          "SQS_QUEUE": "${Token[TOKEN.576]}",
           "FILESYSTEM_DISK": "s3",
           "TABLES_FILESYSTEM_DRIVER": "s3",
           "FORMS_FILESYSTEM_DRIVER": "s3",
@@ -1256,7 +1256,7 @@
                 "Effect": "Allow",
                 "Action": "sqs:SendMessage",
                 "Resource": [
-                  "${Token[TOKEN.593]}"
+                  "${Token[TOKEN.588]}"
                 ]
               }
             ]
@@ -1325,7 +1325,7 @@
           "events": [
             {
               "sqs": {
-                "arn": "${Token[TOKEN.593]}",
+                "arn": "${Token[TOKEN.588]}",
                 "batchSize": 1,
                 "maximumBatchingWindow": 0,
                 "functionResponseType": "ReportBatchItemFailures"
@@ -1346,7 +1346,7 @@
             "events": [
               {
                 "sqs": {
-                  "arn": "${Token[TOKEN.593]}",
+                  "arn": "${Token[TOKEN.588]}",
                   "batchSize": 1,
                   "maximumBatchingWindow": 0,
                   "functionResponseType": "ReportBatchItemFailures"
@@ -1412,7 +1412,7 @@
     "artifact": "/home/art/projects/staticnews/.serverless/staticnews.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/staticnews/production/1677588026604-2023-02-28T12:40:26.604Z",
+    "artifactDirectoryName": "serverless/staticnews/production/1677588242263-2023-02-28T12:44:02.263Z",
     "artifact": "staticnews.zip"
   }
 }
